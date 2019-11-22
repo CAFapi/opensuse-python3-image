@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright 2020 Micro Focus or one of its affiliates.
+    Copyright 2019-2020 Micro Focus or one of its affiliates.
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@
     <description>An openSUSE-based image which includes Python version 3.</description>
     <url>https://github.com/CAFapi/opensuse-python3-image</url>
 
-    <inceptionYear>2020</inceptionYear>
+    <inceptionYear>2019</inceptionYear>
 
     <parent>
         <groupId>com.github.cafapi</groupId>
@@ -60,7 +60,6 @@
 
     <properties>
         <copyrightYear>2020</copyrightYear>
-        <copyrightNotice>Copyright ${copyrightYear} Micro Focus or one of its affiliates.</copyrightNotice>
         <maven.install.skip>true</maven.install.skip>
         <skipNexusStagingDeployMojo>true</skipNexusStagingDeployMojo>
         <dockerHubOrganization>cafapi</dockerHubOrganization>
