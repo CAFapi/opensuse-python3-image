@@ -1,6 +1,6 @@
 # openSUSE and Python3 image
 
-This project builds on the openSUSE Java image [here](https://github.com/CAFapi/opensuse-java8-images) and includes Python version 3. It can be used as a base image by projects which require Python3.
+This project builds on the [openSUSE Base image](https://github.com/CAFapi/opensuse-base-image) and includes Python version 3. It can be used as a base image by projects which require Python3.
 
 ### Tini
 [Tini](https://github.com/krallin/tini) is pre-installed in the container.  If the image entrypoint is not overwritten then it will be automatically used.
