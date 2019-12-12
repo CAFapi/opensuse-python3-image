@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 
-FROM cafapi/opensuse-jre8:1
+FROM cafapi/opensuse-base:1
 
 # Update the OS packages and install Python
 RUN zypper -n refresh && \
