@@ -16,8 +16,13 @@
 
 FROM cafapi/opensuse-base:1
 
+# Copy in python repo key
+COPY dev_python_repo_key.pub .
+
 # Update the OS packages and install Python
-RUN zypper addrepo -G https://download.opensuse.org/repositories/devel:/languages:/python:/Factory/openSUSE_Leap_15.1/devel:languages:python:Factory.repo && \
+RUN zypper addrepo https://download.opensuse.org/repositories/devel:/languages:/python:/Factory/openSUSE_Leap_15.1/devel:languages:python:Factory.repo && \
+    rpmkeys --import dev_python_repo_key.pub && \
+    rm dev_python_repo_key.pub && \
     zypper -n refresh && \
     zypper -n install python3
 
