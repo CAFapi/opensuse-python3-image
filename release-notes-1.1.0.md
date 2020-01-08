@@ -4,7 +4,7 @@
 ${version-number}
 
 #### New Features
-- **SCMOD-8480** - Updated to python [version 3.8.1](https://www.python.org/downloads/release/python-381/)
+- **SCMOD-8480** - Updated to latest development version of Python.
 
 #### Known Issues
 - None
