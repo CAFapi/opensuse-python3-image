@@ -17,7 +17,8 @@
 FROM cafapi/opensuse-base:1
 
 # Update the OS packages and install Python
-RUN zypper -n refresh && \
+RUN zypper addrepo -G https://download.opensuse.org/repositories/devel:/languages:/python:/Factory/openSUSE_Leap_15.1/devel:languages:python:Factory.repo && \
+    zypper -n refresh && \
     zypper -n install python3
 
 # Tag the image
