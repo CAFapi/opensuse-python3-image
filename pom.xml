@@ -23,7 +23,7 @@
 
     <groupId>com.github.cafapi</groupId>
     <artifactId>opensuse-python3-image</artifactId>
-    <version>1.0.0-12</version>
+    <version>70.60.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>openSUSE Python3 image</name>
@@ -55,6 +55,11 @@
             <id>michael-bryson</id>
             <name>Michael Bryson</name>
             <email>michael.bryson@microfocus.com</email>
+        </developer>
+        <developer>
+            <id>isharov</id>
+            <name>Ivan Sharov</name>
+            <email>ivan.sharov@microfocus.com</email>
         </developer>
     </developers>
 
