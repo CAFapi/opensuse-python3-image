@@ -17,7 +17,7 @@
 FROM cafapi/opensuse-base:1
 
 ENV PYTHON_VERSION 3.7.6
-ENV GPG_KEY 0D96DF4D4110E5C43FBFB17F2D347EA6AA65421D
+ARG PYTHON_SHA512=5be022c384728b0c6709d165486f66226d126c521b466ed24d0c4c3c5910ec786a734f4c2c916ac409213c54a492b9fb230fb721c41e3de281676a7e9d8f3171
 
 ARG DEVEL_DEPS="\
     gcc \
@@ -44,22 +44,7 @@ ARG DEVEL_DEPS="\
 RUN zypper -n refresh && \
     zypper -n in $DEVEL_DEPS && \
     wget -O python.tar.xz "https://www.python.org/ftp/python/${PYTHON_VERSION%%[a-z]*}/Python-$PYTHON_VERSION.tar.xz" && \
-    wget -O python.tar.xz.asc "https://www.python.org/ftp/python/${PYTHON_VERSION%%[a-z]*}/Python-$PYTHON_VERSION.tar.xz.asc" && \
-    \
-    export GNUPGHOME="$(mktemp -d)" && \
-# https://github.com/docker-library/tomcat/issues/87
-    for server in ha.pool.sks-keyservers.net \
-                  pgp.mit.edu \
-                  hkp://p80.pool.sks-keyservers.net:80 \
-                  keyserver.ubuntu.com \
-                  hkp://keyserver.ubuntu.com:80 \
-                  keyserver.pgp.com; do \
-        ( gpg --batch --keyserver "$server" --recv-keys "$GPG_KEY" && break || echo "Trying new server..." ) \
-    done && \
-    gpg --batch --verify python.tar.xz.asc python.tar.xz && \
-    { command -v gpgconf > /dev/null && gpgconf --kill all || :; } && \
-    rm -rf "$GNUPGHOME" python.tar.xz.asc && \
-    \
+    echo "$PYTHON_SHA512 python.tar.xz" | sha512sum --strict --check - && \
     mkdir -p /usr/src/python && \
     tar -xJC /usr/src/python --strip-components=1 -f python.tar.xz && \
     rm python.tar.xz && \
