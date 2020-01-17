@@ -14,10 +14,7 @@
 # limitations under the License.
 #
 
-FROM cafapi/opensuse-base:1
-
-ENV PYTHON_VERSION 3.7.6
-ARG PYTHON_SHA512=5be022c384728b0c6709d165486f66226d126c521b466ed24d0c4c3c5910ec786a734f4c2c916ac409213c54a492b9fb230fb721c41e3de281676a7e9d8f3171
+FROM cafapi/opensuse-base:1 as builder
 
 ARG DEVEL_DEPS="\
     gcc \
@@ -40,16 +37,20 @@ ARG DEVEL_DEPS="\
     xz \
     "
 
-# Build Python from source
 RUN zypper -n refresh && \
-    zypper -n in $DEVEL_DEPS && \
-    wget -O python.tar.xz "https://www.python.org/ftp/python/${PYTHON_VERSION%%[a-z]*}/Python-$PYTHON_VERSION.tar.xz" && \
+    zypper -n in $DEVEL_DEPS
+
+# Build Python from source
+ENV PYTHON_VERSION=3.7.6 \
+    PYTHON_SHA512=5be022c384728b0c6709d165486f66226d126c521b466ed24d0c4c3c5910ec786a734f4c2c916ac409213c54a492b9fb230fb721c41e3de281676a7e9d8f3171
+
+RUN wget -O python.tar.xz "https://www.python.org/ftp/python/${PYTHON_VERSION%%[a-z]*}/Python-$PYTHON_VERSION.tar.xz" && \
     echo "$PYTHON_SHA512 python.tar.xz" | sha512sum --strict --check - && \
     mkdir -p /usr/src/python && \
     tar -xJC /usr/src/python --strip-components=1 -f python.tar.xz && \
-    rm python.tar.xz && \
-    \
-    cd /usr/src/python && \
+    rm python.tar.xz
+
+RUN cd /usr/src/python && \
     ./configure \
         --enable-loadable-sqlite-extensions \
         --enable-optimizations \
@@ -96,19 +97,16 @@ RUN zypper -n refresh && \
             test_unicode \
         ' && \
     make install && \
-    ldconfig && \
-    \
-    cd / && \
-    rm -rf /usr/src/python && \
-    find /usr/local -depth \
+    ldconfig
+
+# Remove test files
+RUN find /usr/local -depth \
         \( \
             \( -type d -a \( -name test -o -name tests -o -name idle_test \) \) \
             -o \
             \( -type f -a \( -name '*.pyc' -o -name '*.pyo' \) \) \
         \) -exec rm -rf '{}' + && \
-    python3 --version && \
-    zypper -n rm --clean-deps $DEVEL_DEPS && \
-    zypper clean --all
+    python3 --version
 
 # Some useful symlinks
 RUN cd /usr/local/bin && \
@@ -117,24 +115,27 @@ RUN cd /usr/local/bin && \
     ln -s python3 python && \
     ln -s python3-config python-config
 
-ENV PYTHON_PIP_VERSION 19.3.1
-ENV PYTHON_GET_PIP_URL https://github.com/pypa/get-pip/raw/ffe826207a010164265d9cc807978e3604d18ca0/get-pip.py
-ENV PYTHON_GET_PIP_SHA256 b86f36cc4345ae87bfd4f10ef6b2dbfa7a872fbff70608a1e43944d283fd0eee
-
 # Install pip
-RUN zypper -n in wget && \
-    wget -O get-pip.py "$PYTHON_GET_PIP_URL" && \
-    echo "$PYTHON_GET_PIP_SHA256 *get-pip.py" | sha256sum --check --strict - && \
-    \
-    python get-pip.py \
+ENV PYTHON_PIP_VERSION=19.3.1 \
+    PYTHON_GET_PIP_URL=https://github.com/pypa/get-pip/raw/ffe826207a010164265d9cc807978e3604d18ca0/get-pip.py \
+    PYTHON_GET_PIP_SHA256=b86f36cc4345ae87bfd4f10ef6b2dbfa7a872fbff70608a1e43944d283fd0eee
+
+RUN wget -O get-pip.py "$PYTHON_GET_PIP_URL" && \
+    echo "$PYTHON_GET_PIP_SHA256 get-pip.py" | sha256sum --check --strict -
+
+RUN python get-pip.py \
         --disable-pip-version-check \
         --no-cache-dir \
         "pip==$PYTHON_PIP_VERSION" && \
-    pip --version && \
-    \
-    rm -f get-pip.py && \
-    zypper -n rm --clean-deps wget && \
-    zypper clean --all
+    pip --version
+
+
+FROM cafapi/opensuse-base:1
+
+COPY --from=builder /usr/local /usr/local
+RUN ldconfig
+
+CMD ["python3"]
 
 # Tag the image
 ARG BUILD_NUMBER
@@ -148,5 +149,3 @@ LABEL Build.Number="$BUILD_NUMBER" \
       Git.Repo="$GIT_REPO" \
       Git.Branch="$GIT_BRANCH" \
       Git.Commit="$GIT_COMMIT"
-
-CMD ["python3"]
