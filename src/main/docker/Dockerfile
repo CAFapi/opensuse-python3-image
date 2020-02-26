@@ -24,6 +24,7 @@ RUN zypper addrepo https://download.opensuse.org/repositories/devel:/languages:/
     rpmkeys --import dev_python_repo_key.pub && \
     rm dev_python_repo_key.pub && \
     zypper -n refresh && \
+    zypper -n update && \
     zypper -n install python3
 
 # Tag the image
