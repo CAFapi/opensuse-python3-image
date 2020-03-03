@@ -31,6 +31,7 @@ ARG DEVEL_DEPS="\
     openssl-devel \
     libuuid-devel \
     zlib-devel \
+    sqlite-devel \
     fdupes \
     netcfg \
     timezone \
