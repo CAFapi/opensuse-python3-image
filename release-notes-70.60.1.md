@@ -1,12 +1,12 @@
-!not-ready-for-release!
-
 #### Version Number
 ${version-number}
 
 #### New Features
+ - None
 
 #### Bug Fixes
-* Add missing sqlite3 support  
-  It's included to most standard Python distributions and some software are relying on it.
+ - Added missing SQLite3 support  
+    Support for SQLite3 is included in most standard Python distributions and as such it is required for some software to run.
 
 #### Known Issues
+ - None
