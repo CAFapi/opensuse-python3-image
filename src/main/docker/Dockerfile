@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 
-FROM cafinternal/prereleases:opensuse-base-2.0.0-SNAPSHOT
+FROM cafapi/opensuse-base:2
 
 # Copy in python repo key
 COPY dev_python_repo_key.pub .
