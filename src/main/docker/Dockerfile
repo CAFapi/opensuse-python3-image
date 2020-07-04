@@ -36,6 +36,7 @@ ARG DEVEL_DEPS="\
     netcfg \
     timezone \
     xz \
+    gdbm-devel \
     "
 
 RUN zypper -n refresh && \
@@ -132,6 +133,8 @@ RUN python get-pip.py \
 
 
 FROM cafapi/opensuse-base:1
+RUN zypper -n refresh && \
+    zypper -n in libgdbm4
 
 COPY --from=builder /usr/local /usr/local
 RUN ldconfig
