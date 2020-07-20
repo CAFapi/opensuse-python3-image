@@ -6,7 +6,7 @@ ${version-number}
 
 #### Patch Fixes Included
  - Added missing gdbm module
-    This module is required for Celery state merging.
+    It's included to most standard Python distributions and some software are relying on it.
 
 #### Known Issues
  - None
