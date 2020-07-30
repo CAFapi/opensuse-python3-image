@@ -23,7 +23,7 @@
 
     <groupId>com.github.cafapi</groupId>
     <artifactId>opensuse-python3-image</artifactId>
-    <version>70.60.2-SNAPSHOT</version>
+    <version>70.60.2-6</version>
     <packaging>pom</packaging>
 
     <name>openSUSE Python3 image</name>
