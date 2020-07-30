@@ -5,8 +5,8 @@ ${version-number}
  - None
 
 #### Patch Fixes Included
- - Added missing gdbm module
-    It's included to most standard Python distributions and some software are relying on it.
+ - Added missing gdbm module  
+    This module is included in most standard Python distributions.
 
 #### Known Issues
  - None
