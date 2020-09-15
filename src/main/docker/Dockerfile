@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 
-FROM cafapi/opensuse-base:2
+FROM cafinternal/prereleases:opensuse-base-2.1.0-SNAPSHOT
 
 # Update the OS packages and install Python
 RUN zypper -n refresh && \
