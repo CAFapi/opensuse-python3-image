@@ -14,8 +14,11 @@
 # limitations under the License.
 #
 
+# Docker registries
 ARG DOCKER_HUB_PRIVATE=docker.io
-FROM ${DOCKER_HUB_PRIVATE}/cafinternal/prereleases:opensuse-base-2.1.0-SNAPSHOT
+ARG DOCKER_HUB_PUBLIC=docker.io
+
+FROM ${DOCKER_HUB_PUBLIC}/cafapi/opensuse-base:2
 
 # Update the OS packages and install Python
 RUN zypper -n refresh && \
