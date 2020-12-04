@@ -21,7 +21,8 @@ ARG DOCKER_HUB_PUBLIC=docker.io
 FROM ${DOCKER_HUB_PRIVATE}/cafinternal/prereleases:opensuse-base-2.2.0-SNAPSHOT
 
 # Update the OS packages and install Python
-RUN zypper -n refresh && \
+RUN zypper al curl postgresql dejavu-fonts && \
+    zypper -n refresh && \
     zypper -n update && \
     zypper -n install python3
 
