@@ -17,7 +17,7 @@
 # Docker registry
 ARG DOCKER_HUB_PUBLIC=docker.io
 
-FROM ${DOCKER_HUB_PUBLIC}/cafapi/prereleases:opensuse-base-2.4.1-SNAPSHOT
+FROM ${DOCKER_HUB_PUBLIC}/opensuse-base:2
 
 # Update the OS packages and install Python
 RUN zypper -n refresh && \
