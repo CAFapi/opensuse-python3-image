@@ -1,3 +1,0 @@
-- dockerRepositoryId: cafapi/prereleases
-  imageName: opensuse-python3
-  tag: "2.7.1-467"
